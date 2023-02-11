@@ -1,0 +1,19 @@
+{
+    "name": "elviro/reactable",
+    "description": "Make a model reactable",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elviro Pardillo",
+            "email": "backupacount67@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Elviro\\Reactable\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
