@@ -2,6 +2,7 @@
 
 namespace Elviro\Reactable\Traits;
 
+use App\Models\User;
 use Elviro\Reactable\Models\Reactable as ModelsReactable;
 use Elviro\Reactable\Models\Reaction;
 use Exception;
@@ -21,6 +22,10 @@ trait Reactable
             throw new Exception('Reaction does not exists');
         }
 
+        if (!$this->ensureReactorExists($reactor)) {
+            throw new Exception('Reactor does not exists');
+        }
+
         return DB::table($this->reactions()->getTable())
             ->updateOrInsert(
                 [
@@ -34,8 +39,13 @@ trait Reactable
             );
     }
 
-    private function ensureReactionExists($reaction) : bool
+    private function ensureReactionExists($reaction): bool
     {
         return Reaction::find($reaction) ? true : false;
+    }
+
+    private function ensureReactorExists($reactor): bool
+    {
+        return User::find($reactor) ? true : false;
     }
 }
