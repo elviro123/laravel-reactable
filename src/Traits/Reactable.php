@@ -4,6 +4,7 @@ namespace Elviro\Reactable\Traits;
 
 use Elviro\Reactable\Models\Reactable as ModelsReactable;
 use Elviro\Reactable\Models\Reaction;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 trait Reactable
@@ -16,6 +17,10 @@ trait Reactable
 
     public function react($reaction, $reactor)
     {
+        if (!$this->ensureReactionExists($reaction)) {
+            throw new Exception('Reaction does not exists');
+        }
+
         return DB::table($this->reactions()->getTable())
             ->updateOrInsert(
                 [
@@ -27,5 +32,10 @@ trait Reactable
                     'reaction_id' => $reaction
                 ]
             );
+    }
+
+    private function ensureReactionExists($reaction) : bool
+    {
+        return Reaction::find($reaction) ? true : false;
     }
 }
